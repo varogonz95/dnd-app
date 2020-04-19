@@ -1,6 +1,13 @@
-<section class="section" style="padding-bottom: 0;">
-	<h1 class="title">Un pichazo de inputs van aqui</h1>
-	<h1 class="subtitle">&lt;PlayerName&gt;'s Character Sheet</h1>
+<section class="section has-background-white" style="padding-bottom: 0;">
+	<!-- <h1 class="title">Un pichazo de inputs van aqui</h1> -->
+	<div class="columns">
+		<div class="column">
+			<h1 class="title has-text-left">Hoja de creación de personaje</h1>
+		</div>
+		<div class="column">
+			<h1 class="title has-text-right">{{user.displayName}}</h1>
+		</div>
+	</div>
 	<hr>
 	
 	<form class="is-uppercase" #characterForm="ngForm" autocomplete="off" (ngSubmit)="saveForm()">
@@ -24,7 +31,12 @@
 					<div class="column is-one-third field">
 						<label class="label is-small">Race</label>
 						<div class="control">
-							<input class="input is-small" type="text" placeholder="Race" name="inpRace" [(ngModel)]="character.race">
+							<select name="selRace" class="select is-small" [(ngModel)]="character.race" style="width: 100%;">
+								<option class="is-size-6" [value]="null" selected disabled>-Select your race-</option>
+								<option class="is-size-6" [value]="race.value" *ngFor="let race of races | keyvalue">
+									{{race.value}}
+								</option>
+							</select>
 						</div>
 					</div>
 	
@@ -47,16 +59,16 @@
 						</div>
 					</div>
 	
-					<div class="column is-one-third">
-						<div class="field">
-							<label for="" class="label is-small">Experience Points</label>
-						</div>
-						<div class="field columns">
-							<div class="column control">
+					<div class="column is-one-third field">
+						<label for="" class="label is-small">Experience Points</label>
+						<div class="columns is-gapless control">
+							<div class="column is-5">
 								<input type="number" class="input is-small has-text-right" placeholder="Current Exp" name="inpExpCurrent" [(ngModel)]="character.expCurrent">
 							</div>
-							<label class="label is-small" style="margin-top: 1rem;">/</label>
-							<div class="column control">
+							<div class="column is-2">
+								<label class="label is-small has-text-centered" style="margin-top: .3rem;">/</label>
+							</div>
+							<div class="column is-5">
 								<input type="number" class="input is-small" placeholder="Next Lvl Exp" name="inpExpNext" [(ngModel)]="character.expNext">
 							</div>
 						</div>
@@ -210,7 +222,7 @@
 				</div>
 
 				<div class="table-container">
-					<table class="table is-striped is-hoverable is-narrow is-fullwidth is-size-7">
+					<table class="table is-hoverable is-narrow is-fullwidth is-size-7">
 						<thead>
 							<tr>
 								<th class="has-text-weight-semibold">Name</th>

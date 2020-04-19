@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Character } from 'src/app/data/character';
+import { Classes } from 'src/app/data/class';
+import { Races } from 'src/app/data/races';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
 	selector: 'character-form',
@@ -8,28 +11,28 @@ import { Character } from 'src/app/data/character';
 })
 export class CharacterFormComponent implements OnInit {
 
+	public user: firebase.User
 	public character: Character
+	public races = Races
 
-	constructor() {
+	constructor(private fireauth: AngularFireAuth) {
 		this.character = this.createDefaultCharacter()
 	}
 
 	ngOnInit() {
+		this.user = this.fireauth.auth.currentUser
 	}
 
 	public saveForm() {
-			
 	}
 
 	public createDefaultCharacter() : Character {
 		return {
 			name: "",
-			class: [
-				{}
-			],
+			class: null,
 			level: 0,
 			background: "",
-			race: {},
+			race: null,
 			alignment: "",
 
 			expCurrent: 0,

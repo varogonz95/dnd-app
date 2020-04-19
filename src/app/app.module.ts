@@ -7,20 +7,28 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CharacterFormComponent } from './components/character-form/character-form.component';
+import { SignInComponent } from './pages/signin/signin.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		NavbarComponent,
+		CharacterFormComponent,
 		
 		HomeComponent,
-		
-		CharacterFormComponent
+		SignInComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
-		FormsModule
+		FormsModule,
+		AngularFireAuthModule,
+		AngularFireAuthGuardModule,
+		AngularFireModule.initializeApp(environment.firebase)
 	],
 	providers: [],
 	bootstrap: [AppComponent]

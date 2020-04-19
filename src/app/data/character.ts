@@ -1,15 +1,15 @@
-import { CharacterClass as Class } from './class';
-import { Race } from './race';
+import { Classes } from './class';
+import { Races } from './races';
 import { Perk } from './perk';
 import { Attack } from './attack';
 import { Spell } from './spell';
 
 export interface Character {
 	name: string
-	class: Class[]
+	class: Classes
 	level: number
 	background: string
-	race: Race
+	race: Races
 	alignment: string
 	
 	expNext: number
