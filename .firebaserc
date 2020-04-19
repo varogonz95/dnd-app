@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "dnd-app-48b12": {
+      "hosting": {
+        "dnd": [
+          "dnd-app-48b12"
+        ]
+      }
+    }
+  }
+}

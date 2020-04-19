@@ -1,0 +1,15 @@
+#submitBtn {
+	opacity: .3;
+	transition: opacity .3s;
+	padding: 1rem 0;
+}
+
+#submitBtn:hover {
+	opacity: .8;
+	transition: opacity .3s;
+}
+
+#submitBtn:hover > .button {
+	opacity: 1 !important;
+	transition: opacity .3s;
+}

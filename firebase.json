@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "dnd",
+      "public": "dist/dnd",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
