@@ -4,7 +4,8 @@ import { Perk } from './perk';
 import { Attack } from './attack';
 import { Spell } from './spell';
 
-export interface Character {
+export interface CharacterSheet {
+	uid: string
 	name: string
 	class: Classes
 	level: number

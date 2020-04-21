@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Character } from 'src/app/data/character';
-import { Classes } from 'src/app/data/class';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { Character as CharacterSheet } from 'src/app/data/character-sheet';
 import { Races } from 'src/app/data/races';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase';
 
 @Component({
 	selector: 'character-form',
@@ -12,23 +13,34 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class CharacterFormComponent implements OnInit {
 
 	public user: firebase.User
-	public character: Character
+	public character: CharacterSheet
 	public races = Races
+	public collection: AngularFirestoreCollection<CharacterSheet>
 
-	constructor(private fireauth: AngularFireAuth) {
+	constructor(
+		private fireauth: AngularFireAuth,
+		private store: AngularFirestore) {
 		this.character = this.createDefaultCharacter()
+		this.collection = this.store.collection('character-sheets')
 	}
 
 	ngOnInit() {
 		this.user = this.fireauth.auth.currentUser
+		console.log(this.user);
 	}
 
 	public saveForm() {
+		this.character.uid = this.user.uid
+		this.collection.add(this.character)
+			.then(doc => {
+				console.log(doc)
+			})
 	}
 
-	public createDefaultCharacter() : Character {
+	public createDefaultCharacter() : CharacterSheet {
 		return {
-			name: "",
+			uid: null,
+			name: "",	
 			class: null,
 			level: 0,
 			background: "",

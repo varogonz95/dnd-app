@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'navbar',
@@ -10,7 +11,9 @@ export class NavbarComponent implements OnInit {
 
 	public user: firebase.User
 
-	constructor(private fireauth: AngularFireAuth) { }
+	constructor(
+		private fireauth: AngularFireAuth,
+		private router: Router) { }
 
 	ngOnInit() {
 		this.fireauth.authState.subscribe(user => {
@@ -21,5 +24,6 @@ export class NavbarComponent implements OnInit {
 
 	async signOut() {
 		await this.fireauth.auth.signOut()
+		await this.router.navigate(['home'])
 	}
 }
