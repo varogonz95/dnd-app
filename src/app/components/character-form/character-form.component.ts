@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { Character as CharacterSheet } from 'src/app/data/character-sheet';
+import { CharacterSheet } from 'src/app/data/character-sheet';
 import { Races } from 'src/app/data/races';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
 
 @Component({
 	selector: 'character-form',

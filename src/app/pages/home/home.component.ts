@@ -11,25 +11,28 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
+	public userCharactersSheets: CharacterSheet[] = []
 	private userStateSubscription: Subscription
 	private collection: AngularFirestoreCollection<CharacterSheet>
 
 	constructor(
 		private store: AngularFirestore,
 		private fireAuth: AngularFireAuth) {
-		this.collection = store.collection('character-sheets')
+		this.collection = this.store.collection('character-sheets')
 	}
 
 	ngOnInit() {
-		this.userStateSubscription = this.fireAuth.authState.subscribe(user => {
-			if (user) {
-				this.collection.ref.where("uid", "==", user.uid)
-					.get()
-					.then(docs => {
-						docs.docs.forEach(doc => console.log(doc.data()))
-					})
-			}
-		})
+		this.userStateSubscription = this.fireAuth.authState.subscribe(
+			async user => {
+				if (user) {
+					this.collection.ref.where("uid", "==", user.uid)
+						.onSnapshot(querySnapshot => {
+							this.userCharactersSheets.splice(0)
+							const docs = querySnapshot.docs.map(doc => doc.data() as CharacterSheet)
+							this.userCharactersSheets.push(...docs)
+						})
+				}
+			})
 	}
 
 	ngOnDestroy() {
