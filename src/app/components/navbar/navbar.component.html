@@ -1,7 +1,7 @@
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+<nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
 	<div class="navbar-brand">
-		<a class="navbar-item" href="/">
-			<img src="assets/dd-logo.png" width="112" height="28">
+		<a class="navbar-item" routerLink="/">
+			<img src="assets/images/dd-logo.png" width="112" height="28">
 		</a>
 
 		<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -13,17 +13,15 @@
 
 	<div id="navbarBasicExample" class="navbar-menu">
 		<div class="navbar-start">
-			<a class="navbar-item">Home</a>
-			<a class="navbar-item">Documentation</a>
+			<a class="navbar-item" routerLink="/">Inicio</a>
 
-			<div class="navbar-item has-dropdown is-hoverable">
-				<a class="navbar-link">More</a>
+			<div class="navbar-item has-dropdown is-hoverable" *ngIf="user">
+				<a class="navbar-link">Recursos</a>
 				<div class="navbar-dropdown">
-					<a class="navbar-item">About</a>
-					<a class="navbar-item">Jobs</a>
-					<a class="navbar-item">Contact</a>
+					<a class="navbar-item" (click)="openCalculatorWindow()">Calculadora</a>
+					<a class="navbar-item" href="https://thetrove.net/Books/Dungeons%20&%20Dragons/5th%20Edition%20(5e)/Core/" target="_blank">Documentos y guías</a>
 					<hr class="navbar-divider">
-					<a class="navbar-item">Report an issue</a>
+					<a class="navbar-item" href="mailto:varogonz95@gmail.com" target="_blank" rel="noopener noreferrer">Reportar un problema</a>
 				</div>
 			</div>
 		</div>
@@ -32,12 +30,36 @@
 		<ng-template #loggedIn>
 			<div class="navbar-end">
 				<span class="navbar-item">{{user.displayName}}</span>
-				<a class="navbar-item" (click)="signOut()">Sign out</a>
+
+				<!-- <div class="navbar-item has-dropdown" [ngClass]="{'is-active': displayNotifications}">
+					<a class="navbar-link  is-arrowless" (click)="toggleNotifications()">
+						<ion-icon class="has-text-white is-size-5" name="person-add"></ion-icon>
+						<span class="tag is-rounded is-relative is-danger" style="bottom: .7rem; right: 0; font-size: 7pt;" [ngClass]="{'is-hidden': !notifications.length}">
+							<b>{{notifications.length}}</b>
+						</span>
+					</a>
+
+					<div class="navbar-dropdown is-right">
+						<div class="navbar-item" [ngClass]="{'is-hidden': notifications.length}">
+							Sin notificaciones por el momento...
+						</div>
+
+						<div class="navbar-item" style="justify-content: space-between;" *ngFor="let notification of notifications">
+							<span style="vertical-align: middle;"><b>{{user.displayName}}</b> te ha invitado a su partida. ¿Unirse?</span>
+							<div class="buttons is-inline">
+								<button class="button is-small is-light is-success">Sí</button>
+								<button class="button is-small is-light is-danger">No</button>
+							</div>
+						</div>
+					</div>
+				</div> -->
+
+				<a class="navbar-item" (click)="signOut()">Cerrar sesión</a>
 			</div>
 		</ng-template>
 		<ng-template #notLoggedIn>
 			<div class="navbar-end">
-				<a class="navbar-item" [routerLink]="['/signIn']">Sign in</a>
+				<a class="navbar-item" [routerLink]="['/signIn']">Iniciar sesión</a>
 			</div>
 		</ng-template>
 	</div>

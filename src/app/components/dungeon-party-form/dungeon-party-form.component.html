@@ -1,0 +1,60 @@
+
+<form #dungeonPartyForm="ngForm" (ngSubmit)="saveAndStart()">
+
+	<!-- <div class="file field is-boxed">
+				<label class="file-label" style="width: 100%;">
+					<input class="file-input" type="file" name="resume">
+					<span class="file-cta" style="border-style: dashed; border-width: medium;padding: 2rem">
+						<ion-icon name="cloud-upload" class="is-size-3"></ion-icon>
+						<span class="file-label is-size-4">
+							Agregar portada...
+						</span>
+					</span>
+				</label>
+			</div> -->
+
+	<div class="field">
+		<label class="label is-medium">
+			Nombre de la partida
+			<span class="has-text-danger">*</span>
+		</label>
+		<div class="control">
+			<input class="input is-large" type="text" placeholder="Nombre de la partida" name="inpTitle" [(ngModel)]="dungeonParty.title" required>
+		</div>
+		<p class="help has-text-grey">
+			<span class="has-text-danger">*</span>
+			Obligatorio
+		</p>
+	</div>
+
+
+	<h3 class="title field is-size-5">Argumento/Historia</h3>
+	<hr>
+	<ng-container *ngFor="let story of dungeonParty.storySections; index as $index; first as $isFirst; last as $isLast">
+		<div class="field">
+			<small class="has-text-grey">Sección #{{$index + 1}}</small>
+			<textarea name="txtStorySection_{{$index}}" class="textarea is-medium" rows="10" [maxlength]="maxlength" [(ngModel)]="story.content">
+					</textarea>
+			<p class="has-text-right has-text-grey"><small>{{story.content.length}}/{{maxlength}}</small></p>
+		</div>
+
+		<div class="buttons is-marginless" style="justify-content: flex-end;">
+			<button class="button is-text is-small is-light" [ngClass]="{'is-hidden': dungeonParty.storySections.length > 1 && !$isLast}" (click)="addStorySection()">
+				Agregar sección
+			</button>
+
+			<button class="button is-text is-small is-light" [ngClass]="{'is-hidden': $isFirst && dungeonParty.storySections.length === 1}" (click)="deleteStorySection($index)">
+				Eliminar sección
+			</button>
+		</div>
+	</ng-container>
+
+	<div class="field has-text-centered">
+		<button 
+			class="button is-primary is-medium"
+			[ngClass]="{'is-loading': isLoading}"
+			[disabled]="dungeonPartyForm.invalid || isLoading">
+			Crear partida
+		</button>
+	</div>
+</form>

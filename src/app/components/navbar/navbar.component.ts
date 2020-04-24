@@ -10,20 +10,31 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
 	public user: firebase.User
+	public displayNotifications = false
+	public notifications: any[] = []
+
+	private calcWindow: Window
 
 	constructor(
 		private fireauth: AngularFireAuth,
 		private router: Router) { }
 
 	ngOnInit() {
-		this.fireauth.authState.subscribe(user => {
-			console.log(user);
-			this.user = user
-		})
+		this.fireauth.authState.subscribe(user => this.user = user)
 	}
 
-	async signOut() {
+	public openCalculatorWindow() {
+		if (!this.calcWindow || this.calcWindow.closed)
+			this.calcWindow = window.open('http://chicken-dinner.com/5e/5e-point-buy.html', null, 'width=1080,height=800,location=no,menubar=no,resizable=yes')
+		else this.calcWindow.focus()
+	}
+
+	public async signOut() {
 		await this.fireauth.auth.signOut()
-		await this.router.navigate(['home'])
+		await this.router.navigate(['/signIn'])
+	}
+
+	public toggleNotifications() {
+		this.displayNotifications = !this.displayNotifications
 	}
 }

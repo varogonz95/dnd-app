@@ -1,61 +1,62 @@
 <section class="section">
-	<h1 class="title">Mis personajes</h1>
-
 	<div class="columns">
-		<div class="column">
-			<div class="columns is-multiline">
-				<div class="column is-narrow" *ngFor="let sheet of userCharactersSheets" style="max-width: 33.3%; margin: auto;">
-					<div class="card">
-						<div class="card-content">
-							<div class="media">
-								<div class="media-left">
-									<figure class="image is-48x48">
-										<img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-									</figure>
-								</div>
-								<div class="media-content">
-									<p class="title is-4">{{sheet.name}}</p>
-									<p class="subtitle is-6 has-text-grey">{{sheet.race}} - {{sheet.class}}</p>
-								</div>
-							</div>
-	
-							<div class="content">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. <a>@bulmaio</a>
-								. <a href="#">#css</a> <a href="#">#responsive</a>
-								<br>
-								<time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="column" [ngClass]="{'is-hidden': !playerCharactersSheets.length}">
+			<h1 class="is-full title">Mis personajes</h1>
+
+			<player-character-sheets [sheets]="playerCharactersSheets"></player-character-sheets>
 		</div>
 
 		<div class="column is-4 is-narrow" style="margin: auto">
-			<div class="card">
-				<div class="card-image">
-					<figure class="image is-4by3">
-						<img src="assets/characters.png" alt="Placeholder image">
-					</figure>
-				</div>
-	
-				<div class="card-content">
-					<div class="media">
-						<div class="media-content">
-							<p class="title is-4">Crear personaje</p>
-							<p class="subtitle is-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis fuga ratione nisi. </p>
-							<a class="button is-primary" routerLink="/character/create">Crear</a>
+			<card 
+				image="assets/images/characters.png"
+				headerText="Crear personaje" 
+				description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis fuga ratione nisi." 
+				actionText="Crear" 
+				(onAction)="redirectTo(['/character-sheets/create'])">
+			</card>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="columns has-background-white" style="justify-content: space-between;">
+		<div class="column is-4 is-narrow">
+			<card 
+				image="https://1.bp.blogspot.com/--Y6S9v8N6sA/W0jV19XOA1I/AAAAAAAAGBg/b3Qpi-sQJtwMNoOIcg8Y42qz0bH5THUcgCLcBGAs/s1600/dnd-bar-fight.jpg"
+				headerText="Crear partida" 
+				description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis fuga ratione nisi." 
+				actionText="Nueva partida" 
+				(onAction)="redirectTo(['/dungeon-party/create'])">
+			</card>
+		</div>
+
+		<div class="column is-4 is-narrow">
+			<card 
+				image="http://paizo.com/image/content/CouncilOfThieves/PZO9025CatacombsFight.jpg"
+				headerText="Unirse a una partida" 
+				description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis fuga ratione nisi." 
+				actionText="Unirse"
+				(onAction)="toggleJoinDungeonPartyModal()">
+			</card>
+		</div>
+
+		<div class="modal is-active" *ngIf="displayModal">
+			<div class="modal-background"></div>
+			<div class="modal-content">
+				<form class="box" (ngSubmit)="joinParty()">
+					<div class="field">
+						<div class="control">
+							<input class="input is-medium is-size-4 has-text-centered" type="text" placeholder="Ingrese el código de la partida" autofocus>
 						</div>
 					</div>
-	
-					<!-- <div class="content">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. <a>@bulmaio</a>
-						. <a href="#">#css</a> <a href="#">#responsive</a>
-						<br>
-						<time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-					</div> -->
-				</div>
+
+					<div class="buttons" style="justify-content: flex-end;">
+						<a class="button is-light is-small" type="button" (click)="toggleJoinDungeonPartyModal()">Cancelar</a>
+						<a class="button is-light is-success is-small" type="button">Unirse</a>
+					</div>
+				</form>
 			</div>
+			<button class="modal-close is-large" aria-label="close" (click)="toggleJoinDungeonPartyModal()"></button>
 		</div>
 	</div>
 </section>

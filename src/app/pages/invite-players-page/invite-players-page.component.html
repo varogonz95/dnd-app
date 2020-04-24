@@ -1,0 +1,63 @@
+<section class="section has-background-white">
+	<h3 class="title">Invitar jugadores</h3>
+	<hr>
+
+	<form #invitationsForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off">
+		<div class="field">
+			<div class="control">
+				<input 
+					#inpPlayerEmail
+					class="input is-medium" 
+					type="email" 
+					name="inpPlayerEmail"
+					(input)="transformToTags(inpPlayerEmail, $event)"
+				/>
+				<p class="help">
+					<span class="has-text-danger">*</span>
+					El jugador debe tener una cuenta en el sitio para poder recibir la invitación
+				</p>
+			</div>
+		</div>
+
+		<div class="field is-grouped is-grouped-multiline">
+			<div class="control" *ngFor="let invitation of invitations; index as $index">
+				<div class="tags are-medium has-addons">
+					<span class="tag">{{invitation}}</span>
+					<a class="tag is-delete" (click)="removeInvitation($index)"></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="field box">
+			<h3 class="subtitle is-size-4 is-flex" style="justify-content: space-between;">
+				Invitaciones
+				<button class="button is-link">
+					Enviar&nbsp;
+					<ion-icon name="send"></ion-icon>
+				</button>
+			</h3>
+			<table class="table is-borderless is-hoverable is-fullwidth is-size-5">
+				<tbody>
+					<tr *ngFor="let invitation of invitations">
+						<td class="has-text-grey">{{invitation}}</td>
+						<td class="has-text-right">
+							<button class="button is-white has-text-success" type="button">
+								<span class="is-hidden-mobile">Enviado</span>
+								&nbsp;
+								<ion-icon name="checkbox" class="is-size-4"></ion-icon>
+							</button>
+						</td>
+					</tr>
+					<tr [hidden]="invitations.length">
+						<td class="has-text-grey">No hay invitaciones</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+		<div class="field has-text-right">
+			<button class="button is-light is-medium" type="button" (click)="omit()">Omitir</button>
+		</div>
+	</form>
+
+</section>

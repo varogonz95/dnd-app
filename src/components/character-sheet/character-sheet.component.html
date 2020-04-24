@@ -1,0 +1,229 @@
+<section class="section has-background-white" style="padding-bottom: 0;">
+	<character-sheet-form-header [headerText]="headerText" [playerName]="playerName"></character-sheet-form-header>
+	<hr>
+
+	<form class="is-uppercase" #characterForm="ngForm" autocomplete="off" (ngSubmit)="save()">
+		<fieldset [disabled]="isDisabled">
+			<character-sheet-header [header]="character.header" [imageSrc]="imageSrc" (onImageChange)="imageChange($event)"></character-sheet-header>
+			<hr>
+
+			<div class="columns">
+				<div class="column">
+					<div class="field">
+						<div class="control is-flex" style="justify-content: space-between;">
+							<label class="label">Proficiency Bonus</label>
+							<input class="input is-small" type="number" placeholder="Proficiency Bonus" name="inpProficiencyBonus" [(ngModel)]="character.proficiencyBonus" style="width: 10rem;">
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="control is-flex" style="justify-content: space-between;">
+							<label class="label">Inspiration</label>
+							<input class="input is-small" type="number" placeholder="Inspiration" name="inpInspiration" [(ngModel)]="character.inspiration" style="width: 10rem;">
+						</div>
+					</div>
+
+					<hr>
+
+					<character-sheet-perks [proficiencyBonus]="character.proficiencyBonus" [perks]="character.perks" [passiveWisdom]="character.passiveWisdom">
+					</character-sheet-perks>
+				</div>
+
+				<div class="column">
+					<div class="field is-grouped is-grouped-centered">
+						<div class="control">
+							<input type="number" class="input is-size-6 has-text-weight-bold has-text-centered is-flex" style="width: 4rem; margin: auto;" name="inpArmorClass" [(ngModel)]="character.armorClass">
+							<label for="" class="label is-small has-text-centered">Armor class</label>
+						</div>
+						<div class="control">
+							<input type="number" class="input is-size-6 has-text-weight-bold has-text-centered is-flex" style="width: 4rem; margin: auto;" name="inpInitiative" [(ngModel)]="character.initiative">
+							<label for="" class="label is-small has-text-centered">Initiative</label>
+						</div>
+						<div class="control">
+							<input type="number" class="input is-size-6 has-text-weight-bold has-text-centered is-flex" style="width: 4rem; margin: auto;" name="inpSpeed" [(ngModel)]="character.speed">
+							<label for="" class="label is-small has-text-centered">Speed</label>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="control">
+							<label for="" class="is-inline is-size-7" style="margin-right: 2rem;">Hit Point Maximum</label>
+							<input type="number" class="input is-small" style="width: 3.5rem;" name="inpHitPointMax" [(ngModel)]="character.hitInfo.hitPointsMax">
+						</div>
+					</div>
+					<div class="field">
+						<div class="control">
+							<input type="number" class="input is-medium has-text-centered has-text-weight-bold" name="inpCurrentHitPoints" [(ngModel)]="character.hitInfo.hitPoints">
+							<label for="" class="label is-small has-text-centered">Current Hit Points</label>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="control">
+							<input type="number" class="input is-medium has-text-centered has-text-weight-bold" name="inpTmpHitPoints" [(ngModel)]="character.hitInfo.tmpHitPoints">
+							<label for="" class="label is-small has-text-centered">Temporary Hit Points</label>
+						</div>
+					</div>
+
+					<div class="columns">
+						<div class="column">
+							<div class="field">
+								<div class="control">
+									<label for="" class="is-inline is-size-7" style="margin-right: 2rem;">Total</label>
+									<input type="number" class="input is-small">
+								</div>
+							</div>
+							<div class="field">
+								<div class="control">
+									<input type="number" class="input is-small">
+									<label for="" class="label is-small has-text-centered">Hit Dice</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="column">
+							<div class="field is-grouped">
+								<div class="control">
+									<label for="" class="label is-small has-text-weight-semibold is-inline" style="margin-right: .5rem;">Successes</label>
+									<input type="radio" class="radio is-small" *ngFor="let success of character.deathSavesSuccess">
+								</div>
+							</div>
+							<div class="field is-grouped">
+								<div class="control">
+									<label for="" class="label is-small has-text-weight-semibold is-inline" style="margin-right: .5rem;">Failures</label>
+									<input type="radio" class="radio is-small" *ngFor="let success of character.deathSavesFailures">
+								</div>
+							</div>
+							<div class="field">
+								<div class="control"><label for="" class="label is-small has-text-centered">Death saves</label></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="table-container">
+						<table class="table is-hoverable is-narrow is-fullwidth is-size-7">
+							<thead>
+								<tr>
+									<th class="has-text-weight-semibold">Name</th>
+									<th class="has-text-weight-semibold">ATK Bonus</th>
+									<th class="has-text-weight-semibold">Damage/Type</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr *ngFor="let attack of character.attacks; index as $index">
+									<td>
+										<input type="text" class="input is-small" name="inpAttackName_{{$index}}" [(ngModel)]="attack.name">
+									</td>
+									<td>
+										<input type="text" class="input is-small has-text-centered" name="inpAttackBonus_{{$index}}" [(ngModel)]="attack.bonus">
+									</td>
+									<td>
+										<input type="text" class="input is-small" name="inpAttackDamageType_{{$index}}" [(ngModel)]="attack.damageType">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="table-container">
+							<table class="table is-narrow is-borderless is-fullwidth is-size-7">
+								<caption class="has-text-weight-semibold" style="justify-content: space-between;">
+									Spellcasting
+									<a class="is-size-5" (click)="addSpell()">
+										<ion-icon name="add-circle-outline" style="vertical-align: sub;"></ion-icon>
+									</a>
+								</caption>
+								<tbody>
+									<tr *ngFor="let spell of character.spells; index as $index">
+										<td>
+											<input type="text" class="input is-small" name="inpSpellName_{{$index}}" [(ngModel)]="spell.name">
+										</td>
+										<td [attr.colspan]="$index <= 2? 2 : 1">
+											<textarea name="inpSpellDescription_{{$index}}" cols="30" rows="50" class="textarea is-small" [(ngModel)]="spell.description" style="max-height: 30px;"></textarea>
+											<!-- <input type="text" class="input is-small" name="" [(ngModel)]="spell.description"> -->
+										</td>
+										<td [hidden]="$index <= 2">
+											<button class="delete is-small" style="margin-top: .5rem;" (click)="removeSpell($index)"></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="column">
+							<div class="field">
+								<div class="control">
+									<textarea name="txtEquipmentNotes" cols="30" rows="10" class="textarea" [(ngModel)]="character.equipment"></textarea>
+									<label for="" class="label is-small has-text-centered">Equipment & Character Notes</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="column">
+					<div class="field">
+						<div class="control">
+							<textarea name="txtPersonalityTraits" rows="5" class="textarea" [(ngModel)]="character.personalityTraits"></textarea>
+							<label for="" class="label is-small has-text-centered">Personality Traits</label>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="control">
+							<textarea name="txtIdeals" rows="5" class="textarea" [(ngModel)]="character.ideals"></textarea>
+							<label for="" class="label is-small has-text-centered">Ideals</label>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="control">
+							<textarea name="txtBonds" rows="5" class="textarea" [(ngModel)]="character.bonds"></textarea>
+							<label for="" class="label is-small has-text-centered">Bonds</label>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="control">
+							<textarea name="txtFlaws" rows="5" class="textarea" [(ngModel)]="character.flaws"></textarea>
+							<label for="" class="label is-small has-text-centered">Flaws</label>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="control">
+							<textarea name="txtFeaturesTraits" rows="5" class="textarea" [(ngModel)]="character.featuresTraits"></textarea>
+							<label for="" class="label is-small has-text-centered">Features & Traits</label>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="control">
+							<textarea name="txtProficienciesLanguages" rows="5" class="textarea" [(ngModel)]="character.proficienciesLanguages"></textarea>
+							<label for="" class="label is-small has-text-centered">Other Proficiencies & Languages</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<hr>
+
+			<div id="submitBtn" class="is-sticky-bottom has-text-centered has-background-light">
+				<button 
+					class="button is-primary is-medium is-family-code" 
+					[ngClass]="{'is-loading': isLoading}">
+					Guardar
+				</button>
+				<a 
+					class="has-text-danger is-capitalized is-family-code" 
+					style="position: absolute; right: 1rem; top: 2rem;"
+					[ngClass]="{'is-loading': isLoading}"
+					(click)="deleteSheet()"
+					*ngIf="canDelete">
+					<ion-icon name="trash" style="margin: auto .3rem;"></ion-icon>
+					<span class="is-hidden-mobile">Eliminar</span>
+				</a>
+			</div>
+		</fieldset>
+	</form>
+</section>

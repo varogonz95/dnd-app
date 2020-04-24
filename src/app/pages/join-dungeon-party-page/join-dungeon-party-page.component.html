@@ -1,0 +1,53 @@
+<section class="section has-background-white">
+	<div class="columns" style="justify-content: space-between;">
+		<div class="column is-three-fifths">
+			<dungeon-party-form [dungeonParty]="dungeonParty" [isLoading]="false"></dungeon-party-form>
+		</div>
+
+		<div class="column is-one-quarter">
+			<nav class="panel">
+				<p class="panel-heading">Jugadores</p>
+				<!-- <div class="panel-block">
+					<div class="control has-icons-left">
+						<input class="input is-small" type="text" placeholder="Buscar">
+						<span class="icon is-left is-marginless">
+							<ion-icon class="is-size-5" name="search"></ion-icon>
+						</span>
+					</div>
+				</div> -->
+				<!-- <p class="panel-tabs">
+					<a [ngClass]="{'is-active': playersTab === 'joined'}" (click)="playersTab = 'joined'">En la partida</a>
+					<a [ngClass]="{'is-active': playersTab === 'pending'}" (click)="playersTab = 'pending'">
+						Pendientes
+						<span class="tag is-danger is-normal is-rounded">3</span>
+					</a>
+				</p> -->
+				<a class="panel-block has-text-grey-light" [ngClass]="{'is-hidden': dungeonParty.players.length > 0}">
+					<span class="panel-icon"></span>
+					<small>Sin jugadores</small>
+				</a>
+
+				<a class="panel-block" *ngFor="let player of dungeonParty.players">
+					<span class="panel-icon"></span>
+					<small>bulma</small>&nbsp;
+				</a>
+
+				<!-- <ng-container *ngIf="playersTab === 'pending'">
+					<a class="panel-block has-text-grey-light" [ngClass]="{'is-hidden': dungeonParty.pendingPlayers.length > 0}">
+						<span class="panel-icon"></span>
+						<small>Sin jugadores pendientes</small>
+					</a>
+
+					<a class="panel-block" *ngFor="let player of dungeonParty.pendingPlayers">
+						<span class="panel-icon"></span>
+						<small>bulma</small>&nbsp;
+					</a>
+				</ng-container> -->
+			</nav>
+		</div>
+	</div>
+
+	<textarea cols="30" rows="10" class="box has-background-light" style="border: none;width: 100%;" readonly></textarea>
+	
+	<dump-data [data]="dungeonParty"></dump-data>
+</section>

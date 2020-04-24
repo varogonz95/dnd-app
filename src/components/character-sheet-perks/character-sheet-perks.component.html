@@ -1,0 +1,96 @@
+<div class="columns has-background-white-bis" *ngFor="let perk of perks">
+	<div class="column is-one-quarter">
+		<div class="columns field is-multiline">
+			<div class="column control" style="padding-top: .3rem; padding-bottom: .3rem;">
+				<input 
+					type="number" 
+					name="inpPerk{{perk.name}}" 
+					class="input has-text-centered is-small is-flex" 
+					style="margin: auto; width: 3rem;"
+					(change)="recalcProficiencies(perk)"
+					[(ngModel)]="perk.value" 
+					min="0"
+				/>
+			</div>
+
+			<div class="column control" style="margin: auto; padding-top: .3rem; padding-bottom: .3rem;">
+				<input 
+					type="number" 
+					name="inpPerkMod{{perk.name}}" 
+					class="input is-small has-text-centered has-text-weight-bold is-size-6" 
+					[(ngModel)]="perk.modifier"
+					readonly
+				/>
+				<label for="" class="label is-small has-text-centered">{{perk.name}}</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="column">
+		<aside class="menu">
+			<ul class="menu-list">
+				<li>
+					<a class="field is-grouped">
+						<div class="control">
+							<input 
+								type="checkbox"
+								class="check is-small" 
+								name="chk{{perk.name}}SavingThrowsChk" 
+								[(ngModel)]="perk.savingThrowsChk" 
+								(change)="recalcProficiencies(perk)"
+							/>
+						</div>
+						<div class="control">
+							<input 
+								type="number" 
+								name="inp{{perk.name}}SavingThrows" 
+								class="input is-small is-radiusless" 
+								style="border: none; border-bottom: thin solid; width: 3rem;" 
+								[(ngModel)]="perk.savingThrows"
+								readonly
+							/>
+						</div>
+						<label for="" class="label is-small" style="margin-top: .5rem;">Saving throws</label>
+					</a>
+				</li>
+
+				<li *ngFor="let ability of perk.abilities">
+					<a class="field is-grouped">
+						<div class="control">
+							<input 
+								type="checkbox" 
+								name="chk{{ability.name | pascalCase}}" 
+								class="check is-small" 
+								(change)="recalcProficiencies(perk)"
+								[(ngModel)]="ability.checked" 
+							/>
+						</div>
+						<div class="control">
+							<input 
+								type="number" 
+								name="inp{{ability.name | pascalCase}}"
+								class="input is-small is-radiusless" 
+								style="border: none; border-bottom: thin solid; width: 3rem;"
+								[(ngModel)]="ability.value"
+							/>
+						</div>
+						<label for="" class="label is-small" style="margin-top: .5rem;">{{ability.name}}</label>
+					</a>
+				</li>
+			</ul>
+		</aside>
+	</div>
+</div>
+
+<div class="field is-grouped is-grouped-centered">
+	<div class="control">
+		<input 
+			type="number" 
+			name="inpPassiveWisdom" 
+			class="input is-small has-text-centered" 
+			style="width: 4rem;" 
+			[(ngModel)]="passiveWisdom"
+		/>
+		<label for="" class="label is-small has-text-weight-semibold is-inline" style="margin-left: 1rem;">Passive Wisdom (Perception)</label>
+	</div>
+</div>

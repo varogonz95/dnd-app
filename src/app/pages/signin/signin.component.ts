@@ -7,14 +7,18 @@ import { auth } from "firebase";
 	templateUrl: './signin.component.html',
 	styleUrls: ['./signin.component.css']
 })
-export class SignInComponent implements OnInit {
+export class SignInPage implements OnInit {
 
-	constructor(private fireAuth: AngularFireAuth) { }
+	private provider = new auth.GoogleAuthProvider()
+
+	constructor(private fireAuth: AngularFireAuth) {
+		this.provider.setCustomParameters({ prompt: "select_account" })
+	}
 
 	ngOnInit() {
 	}
 
 	public signin() {
-		this.fireAuth.auth.signInWithRedirect(new auth.GoogleAuthProvider());
+		this.fireAuth.auth.signInWithRedirect(this.provider);
 	}
 }

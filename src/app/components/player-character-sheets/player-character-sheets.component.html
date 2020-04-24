@@ -1,0 +1,46 @@
+<div class="columns is-multiline">
+	<div class="column is-narrow" *ngFor="let sheet of sheets" style="min-width: 350px; max-width: 350px;">
+		<div class="card">
+			<div class="card-content">
+				<div class="media">
+					<div class="media-left">
+						<figure class="image is-48x48">
+							<img [src]="sheet.header.imageUrl || 'assets/images/noimage.png'" style="width: 64px;height: 48px;">
+						</figure>
+					</div>
+					<div class="media-content">
+						<p class="title is-5">{{sheet.header.name}}</p>
+						<p class="subtitle is-6 has-text-grey">{{sheet.header.race}} - {{sheet.header.class.name}} {{sheet.header.level}}</p>
+					</div>
+				</div>
+				<hr class="is-marginless" style="margin-bottom: 1rem !important;">
+				<div class="content is-small">
+					<ul class="is-marginless" style="list-style: none;">
+						<li>
+							<b>Background:</b>
+							<span [ngClass]="{'has-text-grey-light': !sheet.header.background}">
+								{{sheet.header.background || 'None'}}
+							</span>
+						</li>
+						<li>
+							<b>Alignment:</b>
+							<span [ngClass]="{'has-text-grey-light': !sheet.header.alignment}">
+								{{sheet.header.alignment || 'None'}}
+							</span>
+						</li>
+						<li>
+							<b>Experience:</b>
+							{{sheet.header.expCurrent}}/{{sheet.header.expNext}}
+						</li>
+					</ul>
+				</div>
+
+				<div class="buttons" style="justify-content: flex-end;">
+					<!-- MOSTRAR SI EL PERSONAJE SE ENCUENTRA EN UNA PARTIDA -->
+					<!-- <a class="button is-success is-light is-small" [routerLink]="['/character-sheets', sheet.id]">Ir a la partida</a> -->
+					<a class="button is-link is-light is-small" [routerLink]="['/character-sheets/view', sheet.id]">Ver hoja</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
